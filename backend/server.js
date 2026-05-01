@@ -12,7 +12,7 @@ app.get("/", (req, res) => {
 });
 
 // ─── Connect to MongoDB ───────────────────────────────────────────────────────
-mongoose.connect('mongodb://localhost:27017/taskmanager')
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/taskmanager')
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log(err));
 
