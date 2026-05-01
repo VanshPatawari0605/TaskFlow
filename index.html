@@ -569,7 +569,7 @@
  
 <script>
   // ── Config ──────────────────────────────────────────────────────────────────
-  const API = 'https://taskflow-bz5r.onrender.com/api';// Change to your deployed URL
+  //// Change to your deployed URL
   let token = localStorage.getItem('token');
   let currentUser = JSON.parse(localStorage.getItem('user') || 'null');
   let currentFilter = 'all';
@@ -590,6 +590,7 @@
   async function login() {
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-pass').value;
+    //
     try {
       const res = await fetch(`${API}/auth/login`, {
         method: 'POST',
@@ -652,7 +653,7 @@
  
   async function fetchTasks() {
     try {
-      const res = await fetch(`${API}/tasks`, { headers: authHeaders() });
+      const res = await fetch(`${API}/api/tasks`, { headers: authHeaders() });
       allTasks = await res.json();
       renderTasks();
       updateStats();
@@ -670,7 +671,7 @@
       priority: document.getElementById('task-priority').value,
       dueDate: document.getElementById('task-due').value || undefined,
     };
-    await fetch(`${API}/tasks`, { method: 'POST', headers: authHeaders(), body: JSON.stringify(body) });
+    await fetch(`${API}/api/tasks`, { method: 'POST', headers: authHeaders(), body: JSON.stringify(body) });
     document.getElementById('task-title').value = '';
     document.getElementById('task-desc').value = '';
     fetchTasks();
@@ -678,12 +679,12 @@
  
   async function toggleStatus(id, current) {
     const next = current === 'completed' ? 'pending' : current === 'pending' ? 'in-progress' : 'completed';
-    await fetch(`${API}/tasks/${id}`, { method: 'PUT', headers: authHeaders(), body: JSON.stringify({ status: next }) });
+    await fetch(`${API}/api/tasks/${id}`, { method: 'PUT', headers: authHeaders(), body: JSON.stringify({ status: next }) });
     fetchTasks();
   }
  
   async function deleteTask(id) {
-    await fetch(`${API}/tasks/${id}`, { method: 'DELETE', headers: authHeaders() });
+    await fetch(`${API}/api/tasks/${id}`, { method: 'DELETE', headers: authHeaders() });
     fetchTasks();
   }
  
